@@ -11,7 +11,8 @@ namespace Company.G2.DAL.Data.Contexts
 {
     public class CompanyDbContext :DbContext
     {
-        public CompanyDbContext() :base()
+        //CLR
+        public CompanyDbContext(DbContextOptions<CompanyDbContext>options) :base(options)
         {
             
         }
@@ -20,10 +21,10 @@ namespace Company.G2.DAL.Data.Contexts
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server = .; Database = CompanyG2 ; Trusted_Connection = True; TrustServerCertificate = true");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Server = .; Database = CompanyG2 ; Trusted_Connection = True; TrustServerCertificate = true");
+        //}
         public DbSet<Department> Departments { get; set; }
     }
 }
