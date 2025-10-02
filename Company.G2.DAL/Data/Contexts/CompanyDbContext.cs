@@ -16,6 +16,7 @@ namespace Company.G2.DAL.Data.Contexts
         {
             
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -25,6 +26,10 @@ namespace Company.G2.DAL.Data.Contexts
         //{
         //    optionsBuilder.UseSqlServer("Server = .; Database = CompanyG2 ; Trusted_Connection = True; TrustServerCertificate = true");
         //}
+
         public DbSet<Department> Departments { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
     }
 }
