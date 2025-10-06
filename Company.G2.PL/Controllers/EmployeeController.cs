@@ -73,6 +73,7 @@ namespace Company.G2.PL.Controllers
         [HttpGet]
         public IActionResult Edit(int? id)
         {
+
             //if (id is null) return BadRequest("Invalid ID"); //400
             //var department = employeeRepository.Get(id.Value);
             //if (department is null) return NotFound(new { StatusCode = 404, message = $"Department with Id :{id} is not Found" });
