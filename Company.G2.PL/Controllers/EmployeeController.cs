@@ -8,17 +8,27 @@ namespace Company.G2.PL.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IDepartmentRepository _departmentRepository;
 
         //Ask CLR Create Object From IEmployeeRepository
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository,IDepartmentRepository departmentRepository)
         {
             _employeeRepository = employeeRepository;
+            _departmentRepository = departmentRepository;
         }
 
         [HttpGet] //Get : /Department/Index
         public IActionResult Index()
         {
             var employees = _employeeRepository.GetAll();
+            ////Dictionary  : 3 property
+            ////1.View Data : Transfer Extra Information From Controller (Action) To View
+            //ViewData["Message"] = "Hello From ViewData ";
+
+            ////2.View Bag  : Transfer Extra Information From Controller (Action) To View
+            //ViewBag.Message = new { Message="Hello From ViewBag" };
+
+            //3.TempData  : 
 
             return View(employees);
         }
@@ -26,7 +36,9 @@ namespace Company.G2.PL.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+          var departments = _departmentRepository.GetAll();
+            ViewData["departments"] = departments;
+            return View(departments);
         }
 
         [HttpPost]
@@ -35,26 +47,35 @@ namespace Company.G2.PL.Controllers
 
             if (ModelState.IsValid) //Server Side Validation 
             {
-                var employee = new Employee()
+                try
                 {
-                    Name=model.Name,
-                    Address = model.Address,
-                    Age=model.Age,
-                    CreateAt=model.CreateAt,
-                    HiringDate =model.HiringDate,
-                    Email=model.Email,
-                    IsActive=model.IsActive,
-                    IsDeleted=model.IsDeleted,
-                    Phone=model.Phone,
-                    Salary=model.Salary,
-                };
-                var count = _employeeRepository.Add(employee);
 
-                if (count > 0)
-                {
-                    return RedirectToAction(nameof(Index));
+                    var employee = new Employee()
+                    {
+                        Name = model.Name,
+                        Address = model.Address,
+                        Age = model.Age,
+                        CreateAt = model.CreateAt,
+                        HiringDate = model.HiringDate,
+                        Email = model.Email,
+                        IsActive = model.IsActive,
+                        IsDeleted = model.IsDeleted,
+                        Phone = model.Phone,
+                        Salary = model.Salary,
+                    };
+                    var count = _employeeRepository.Add(employee);
+
+                    if (count > 0)
+                    {
+                       TempData["Message"] = "Employee Is Created !!";
+
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
-
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
             }
             return View(model);
         }

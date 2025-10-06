@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Company.G2.DAL.Models;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Company.G2.PL.Dtos
@@ -33,5 +34,7 @@ namespace Company.G2.PL.Dtos
 
         [DisplayName("Date Of Creation")]
         public DateTime CreateAt { get; set; }
+        public IEnumerable<Department> Department { get; internal set; }
+        public IEnumerable<Department> Departments { get; internal set; }
     }
 }
