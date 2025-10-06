@@ -24,7 +24,7 @@ namespace Company.G2.BLL.Repositories
         }
         public T? Get(int id)
         {
-            return _context.Set<T>().Find();
+            return _context.Set<T>().Find(id);
         }
         public int Add(T model)
         {
